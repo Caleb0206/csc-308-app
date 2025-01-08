@@ -19,7 +19,7 @@ function Form() {
                 type="text"
                 name="name"
                 id="name"
-                value={person.job}
+                value={person.name}
                 onChange={handleChange}
             />
             <label htmlFor="job">Job</label>
