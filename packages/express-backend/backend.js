@@ -41,6 +41,18 @@ const findUserByName = (name) => {
         (user) => user["name"] === name
     );
 };
+const findUsersById = (id) =>
+    users["users_list"].find((user) => user["id"] === id); //returns the first occurrence that matches the condition
+
+app.get("/users/:id", (req, res) => {
+    const id = req.params["id"]; // req.params.id
+    let result = findUsersById(id);
+    if (result === undefined) {
+        res.status(404).send("Resource not found.");
+    } else {
+        res.send(result);
+    }
+});
 
 app.get("/users", (req, res) => {
     const name = req.query.name;
