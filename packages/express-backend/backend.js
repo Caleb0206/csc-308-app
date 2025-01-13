@@ -44,6 +44,17 @@ const findUserByName = (name) => {
 const findUsersById = (id) =>
     users["users_list"].find((user) => user["id"] === id); //returns the first occurrence that matches the condition
 
+const addUser = (user) => {
+    users["users_list"].push(user);
+    return user;
+}
+
+app.post("/users", (req, res) => {
+    const userToAdd = req.body;
+    addUser(userToAdd);
+    res.send();
+});
+
 app.get("/users/:id", (req, res) => {
     const id = req.params["id"]; // req.params.id
     let result = findUsersById(id);
