@@ -67,8 +67,10 @@ const deleteUser = (id) => {
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.send();
+    if (userToAdd.name && userToAdd.job) {
+        addUser(userToAdd);
+        res.status(201).send();
+    }
 });
 
 app.delete("/users", (req, res) => {
@@ -97,10 +99,9 @@ app.get("/users", (req, res) => {
     const name = req.query.name;
     const job = req.query.job;
 
-    if( job != undefined && name != undefined)
-    {
-        let result = findUserByNameAndJob(name,job);
-        result = { users_list : result};
+    if (job != undefined && name != undefined) {
+        let result = findUserByNameAndJob(name, job);
+        result = { users_list: result };
         res.send(result);
     } else if (name != undefined) {
         let result = findUserByName(name);

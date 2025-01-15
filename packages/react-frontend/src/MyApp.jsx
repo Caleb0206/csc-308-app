@@ -15,7 +15,15 @@ function MyApp() {
   //only update the table if our POST call is successful
   function updateList(person) {
     postUser(person)
-      .then(() => setCharacters([...characters, person]))
+      .then((res) => {
+        if (res.status === 201) {
+          // console.log(`Created successfully ${res.status}`)
+          setCharacters([...characters, person]);
+        }
+        else {
+          console.log(`Error creating character ${res.status}`);
+        }
+      })
       .catch((error) => {
         console.log(error);
       })
