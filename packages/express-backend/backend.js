@@ -64,11 +64,24 @@ const deleteUser = (id) => {
     }
     return false;
 }
-
+// generates ID using name and random number 0-99
+function generateID(user) {
+    return `${user.name}${Math.floor(Math.random() * 100)}`;
+}
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
     if (userToAdd.name && userToAdd.job) {
-        addUser(userToAdd);
+        if (!userToAdd.id) {
+            userToAdd.id = generateID(userToAdd);
+        }
+        
+        // Reordered so the id is at the top of the attributes (not necessary but just for organization)
+        const reorderedUser = {
+            id: userToAdd.id,
+            name: userToAdd.name,
+            job: userToAdd.job
+        };
+        addUser(reorderedUser);
         res.status(201).send();
     }
 });
