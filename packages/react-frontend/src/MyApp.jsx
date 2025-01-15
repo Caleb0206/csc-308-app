@@ -12,12 +12,28 @@ function MyApp() {
     });
     setCharacters(updated);
   }
+  //only update the table if our POST call is successful
   function updateList(person) {
-    setCharacters([...characters, person]);
+    postUser(person)
+      .then(() => setCharacters([...characters, person]))
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   function fetchUsers() {
     const promise = fetch("http://localhost:8000/users");
+    return promise;
+  }
+  function postUser(person) {
+    const promise = fetch("http://localhost:8000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(person),
+    });
+
     return promise;
   }
 
@@ -27,7 +43,7 @@ function MyApp() {
       .then((json) => setCharacters(json["users_list"]))
       .catch((error) => { console.log(error); });
   }, []); //should be called only when the MyApp component first mounts by passing an empty array
-  
+
 
   return (
     <div className="container">
