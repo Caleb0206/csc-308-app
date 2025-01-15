@@ -18,11 +18,15 @@ function MyApp() {
       .then((res) => {
         if (res.status === 201) {
           // console.log(`Created successfully ${res.status}`)
-          setCharacters([...characters, person]);
+          return res.json();
         }
         else {
           console.log(`Error creating character ${res.status}`);
         }
+      })
+      .then((newUser) => {
+        // update with the new user from POST
+        setCharacters([...characters, newUser]); 
       })
       .catch((error) => {
         console.log(error);

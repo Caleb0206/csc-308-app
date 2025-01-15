@@ -82,7 +82,7 @@ app.post("/users", (req, res) => {
             job: userToAdd.job
         };
         addUser(reorderedUser);
-        res.status(201).send();
+        res.status(201).send(reorderedUser);
     }
 });
 
