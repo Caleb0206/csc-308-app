@@ -1,5 +1,6 @@
 // backend.js
 import express from "express"; // import express
+import cors from "cors";
 
 const users = {
     users_list: [
@@ -34,6 +35,7 @@ const users = {
 const app = express(); // create an instance of express
 const port = 8000; // constant of port 
 
+app.use(cors());
 app.use(express.json()); // process incoming data in JSON format
 
 const findUserByName = (name) => {
