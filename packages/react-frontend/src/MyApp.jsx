@@ -7,11 +7,29 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
+    const userToDelete = characters[index];
+    
+    deleteUser(userToDelete)
+      .then((res) => {
+        if (res.status === 204) {
+          fetchUsers()
+            .then((res) => res.json())
+            .then((json) => setCharacters(json["users_list"]))
+            .catch((error) => { console.log(error); });
+        }
+        else {
+          console.log(`User not found with id: ${userToDelete.id}`)
+        }
+      })
   }
+  
+  function deleteUser(person) {
+    const promise = fetch(`http://localhost:8000/users/${person.id}`, {
+      method: "DELETE",
+    });
+    return promise;
+  }
+
   //only update the table if our POST call is successful
   function updateList(person) {
     postUser(person)
@@ -26,7 +44,7 @@ function MyApp() {
       })
       .then((newUser) => {
         // update with the new user from POST
-        setCharacters([...characters, newUser]); 
+        setCharacters([...characters, newUser]);
       })
       .catch((error) => {
         console.log(error);

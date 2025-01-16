@@ -86,11 +86,11 @@ app.post("/users", (req, res) => {
     }
 });
 
-app.delete("/users", (req, res) => {
-    const id = req.body.id;
+app.delete("/users/:id", (req, res) => {
+    const id = req.params.id;
     const success = deleteUser(id);
     if (success) {
-        res.send(success);
+        res.status(204).send();
     }
     else {
         res.status(404).send("User not found.");
