@@ -12,17 +12,14 @@ function MyApp() {
     deleteUser(userToDelete)
       .then((res) => {
         if (res.status === 204) {
-          fetchUsers()
-            .then((res) => res.json())
-            .then((json) => setCharacters(json["users_list"]))
-            .catch((error) => { console.log(error); });
+          setCharacters(characters.splice(index, 1));
         }
         else {
           console.log(`User not found with id: ${userToDelete.id}`)
         }
       })
   }
-  
+
   function deleteUser(person) {
     const promise = fetch(`http://localhost:8000/users/${person.id}`, {
       method: "DELETE",
