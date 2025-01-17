@@ -12,7 +12,9 @@ function MyApp() {
     deleteUser(userToDelete)
       .then((res) => {
         if (res.status === 204) {
-          setCharacters(characters.splice(index, 1));
+          // filter out character with the index
+          const updatedCharacters = characters.filter((_, i) => i !== index);
+          setCharacters(updatedCharacters);
         }
         else {
           console.log(`User not found with id: ${userToDelete.id}`)
